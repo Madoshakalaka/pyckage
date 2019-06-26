@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+    <style>
+      .error{
+        color:red;
+      }
+
+      .loading{
+        color: orange;
+      }
+
+      .warning {
+        color: orangered;
+      }
+      .message {
+        color: green;
+      }
+
+    </style>
+
+  </head>
+  <body>
+  <h1 class="lmao">Pykage</h1>
+
+  <p hidden class="message" id="package-available-message">Package name available<p>
+  <p hidden class="warning" id="package-duplicate-error">Package with the same name exists<p>
+  <p hidden class="error" id="package-empty-error">Please give package a name<p>
+  <p hidden class="loading" id="package-check-loading">Checking name availability from pypi...<p>
+  <p hidden class="error" id="package-check-error">Error happened. Can't check availability<p>
+  <label for="package-name">Package Name:</label>
+  <input id="package-name" placeholder="All lowercase; no space">
+
+  <br>
+
+  <label for="package-description">Package description:</label>
+  <textarea id="package-description" placeholder="For readme, PYPI"></textarea>
+
+  <br>
+  <label for="git-repo-name">Github repository name:</label>
+  <input id="git-repo-name">
+
+  <br>
+
+  <label for="licence">Licence:</label>
+  <select id="licence">
+    <option value="MIT">MIT</option>
+  </select>
+
+
+  <br>
+
+  <label for="licence-person-name">Name on licence:</label>
+  <input id="licence-person-name" placeholder="You full name on the licence" class="auto-save">
+
+  <br>
+
+  <label for="pypi-user-name">Pypi username:</label>
+  <input id="pypi-user-name" placeholder="your username at pypi.org" class="auto-save">
+
+  <br>
+
+  <label for="github-username">Github username:</label>
+  <input id="github-username" placeholder="Your Github username" class="auto-save">
+
+  <br>
+
+  <label for="url-on-pypi">Url on PyPI:</label>
+  <input id="url-on-pypi" placeholder="Your home page url that displays on PyPI">
+  <br>
+
+  <label for="author-on-pypi">Author on PyPI:</label>
+  <input id="author-on-pypi" placeholder="The author name that displays on PyPI" class="auto-save">
+  <br>
+
+  <label for="author-email">Your e-mail:</label>
+  <input id="author-email" placeholder="You email displayed on pypi" class="auto-save">
+  <br>
+
+  <h3>python version</h3>
+  <input type="checkbox" id="python-version-35" class="python-version auto-save"><label for="python-version-35">3.5</label><br>
+  <input type="checkbox" id="python-version-36" class="python-version auto-save"><label for="python-version-36">3.6</label><br>
+  <input type="checkbox" id="python-version-37" class="python-version auto-save"><label for="python-version-37">3.7</label><br>
+
+  <br>
+  <input type="checkbox" id="create-cmd-entry"><label for="create-cmd-entry">Create Command Line Entry</label>
+
+  <br>
+  <label for="command-name">Command name:</label>
+  <input id="command-name" placeholder="Command name for terminal shortcut">
+
+  <br>
+
+  <p hidden class="error" id="directory-exists-error">Folder with the same package name already exists. Aborted.<p>
+  <p hidden class="error" id="directory-empty-error">Please choose a directory<p>
+  <label for="directory">Choose a directory to generate the project:</label>
+  <input type="file" id="directory" webkitdirectory/>
+
+
+  <br>
+
+  <br>
+
+  <p hidden class="loading" id="generating">Generating Project...<p>
+
+  <button id="generate-button">Generate</button>
+  </body>
+</html>
