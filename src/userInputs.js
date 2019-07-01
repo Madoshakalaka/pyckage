@@ -193,7 +193,7 @@ prepareAutoSaveLoad(github_username);
 prepareAutoSaveLoad(author_email);
 prepareAutoSaveLoad(author_on_pypi);
 
-console.log(python_version_boxes);
+// console.log(python_version_boxes);
 
 python_version_boxes.each((i, obj)=>prepareAutoSaveLoad($(obj)));
 
