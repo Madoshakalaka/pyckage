@@ -45,16 +45,16 @@
 
   <br>
 
-  <label for="licence">Licence:</label>
-  <select id="licence">
+  <label for="license">License:</label>
+  <select id="license">
     <option value="MIT">MIT</option>
   </select>
 
 
   <br>
 
-  <label for="licence-person-name">Name on licence:</label>
-  <input id="licence-person-name" placeholder="You full name on the licence" class="auto-save">
+  <label for="license-person-name">Name on license:</label>
+  <input id="license-person-name" placeholder="You full name on the license" class="auto-save">
 
   <br>
 
@@ -99,13 +99,25 @@
   <label for="directory">Choose a directory to generate the project:</label>
   <input type="file" id="directory" webkitdirectory/>
 
-
   <br>
-
   <br>
 
   <p hidden class="loading" id="generating">Generating Project...<p>
-
+  <p hidden class="message" id="generation-complete-message">Generation Complete<p>
   <button id="generate-button">Generate</button>
+
+
+  <ul id="manual-instruction-list" hidden>To Do
+    <li>Push the generated project to github</li>
+    <li>Go on travis CI and add the newly created repo</li>
+    <li>Cd to the newly created project</li>>
+    <li><strong>python setup.py sdist</strong></li>
+    <li><strong>python twine upload dist/*</strong></li>
+    <li><strong>travis encrypt your-password-here --add deploy.password</strong> to encryt your password as a secure password. It will append it to the end of the file. Open <strong>.travis.yml</strong> and move the added secure password to the commented out line</li>
+    <li>Enjoy - start to write your packages and fill the tests</li>
+  </ul>
+  <br>
+  <p id="explanation" hidden>If you do everything following the instruction. If you just change the version string in setup.py everytime you want to publish a new package version, every tagged push to github will automatically trigger a pypi release.</p>
+
   </body>
 </html>

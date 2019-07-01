@@ -2,6 +2,11 @@ const $ = require("jquery");
 const store = require("./store");
 const { spawn } = require('child_process');
 
+const manual_instruction_list = $("#manual-instruction-list");
+
+const explanation = $("#explanation");
+
+inputs = {};
 // const pip_query = spawn('pip', ['-lh', '/usr']);
 
 // ls.stdout.on('data', (data) => {
@@ -91,7 +96,7 @@ function prepareAutoDecide(elements, element, func){
 
 
 const package_name_input = $("#package-name");
-const license_person_name_input = $("#licence-person-name");
+const license_person_name_input = $("#license-person-name");
 const git_repo_name_input = $("#git-repo-name");
 const pypi_username = $("#pypi-user-name");
 const github_username = $("#github-username");
@@ -125,6 +130,9 @@ package_name_input.focusout(()=>{
     const error = $("#package-check-error");
     const duplicate = $("#package-duplicate-error");
     const available = $("#package-available-message");
+
+    explanation.hide();
+    manual_instruction_list.hide();
 
     available.hide();
     duplicate.hide();
@@ -217,11 +225,6 @@ prepareAutoDecide([package_name_input],command_name_input, (elements)=>{return e
 //     }
 // });
 
-
-let inputs = {};
-
-
-
 inputs.prepareForSaves = () => {
 
   license_person_name_input.focusout((e)=>{
@@ -235,12 +238,48 @@ inputs.prepareForSaves = () => {
 
 };
 
+inputs.getAuthorEmail = () =>{
+    return $("#author-email").val();
+};
+
+inputs.getAuthorOnPypi= () =>{
+    return $("#author-on-pypi").val();
+};
+
+inputs.getPackageDescription = () =>{
+    return $("#package-description").val();
+};
+
+inputs.getGithubUsername = () =>{
+    return $("#github-username").val();
+};
+
+inputs.getGitRepoName = () =>{
+    return $("#git-repo-name").val();
+};
+
+inputs.getLicensePersonName = () =>{
+    return $("#license-person-name").val();
+};
+
+inputs.getPypiUsername = () =>{
+    return $("#pypi-user-name").val();
+};
+
+inputs.getCommandName = ()=>{
+    return $("#command-name").val();
+};
+
 inputs.getRootFolder = () =>{
     return $("#directory")[0].files[0].path
 };
 
 inputs.getPackageName = () =>{
     return $("#package-name").val();
+};
+
+inputs.getDescription = () =>{
+    return $("#package-description").val();
 };
 
 inputs.checkCompleteness= ()=>{

@@ -6,6 +6,6 @@ module.exports = {
     rules: require('./webpack.rules'),
   },
   plugins: [
-    new CopyWebpackPlugin( [{from:'src/static/__init__.py',to: 'main_window'}])
+    new CopyWebpackPlugin( [{from:'src/static/*',to: 'main_window', flatten:true, dot:true}])
   ]
 };
