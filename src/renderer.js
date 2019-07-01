@@ -107,7 +107,7 @@ button.click(()=>{
             fs.mkdirSync(path.join(projectFolder, 'readme_assets'));
             fs.mkdirSync(path.join(projectFolder, 'tests'));
             fs.mkdirSync(path.join(projectFolder, 'tests', 'fixtures'));
-            fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'));
+            fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '');
 
 
             writeTemplate('main.py', lookup, projectFolder, packageName, 'main.py');
@@ -133,6 +133,7 @@ button.click(()=>{
 
             writeTemplate('setup.py', lookup, projectFolder, 'setup.py');
 
+            writeTemplate('pykage-todo.txt', lookup, projectFolder, 'pykage-todo.txt');
 
             generating.hide();
             manual_instruction_list.show();
