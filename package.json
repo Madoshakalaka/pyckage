@@ -8,7 +8,7 @@
     "start": "electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make",
-    "publish": "electron-forge publish",
+    "publish": "GITHUB_TOKEN=$(cat secret) electron-forge publish",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -86,7 +86,7 @@
     "@electron-forge/publisher-github": "^6.0.0-beta.39",
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "copy-webpack-plugin": "^5.0.3",
-    "electron": "5.0.5",
+    "electron": "5.0.7",
     "node-loader": "^0.6.0"
   }
 }
