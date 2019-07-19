@@ -141,7 +141,7 @@ package_name_input.focusout(()=>{
 
 
     if (name !== ""){
-        const pip_query = spawn('pip', ['search', name]);
+        const pip_query = spawn('pip3', ['search', name]);
         loading.fadeIn("slow");
 
         let entireData="";
@@ -159,6 +159,7 @@ package_name_input.focusout(()=>{
 
                 loading.hide();
                 if (errorData !== ""){
+                    console.log(errorData)
                     error.fadeIn('fast');
                 }
                 else{
