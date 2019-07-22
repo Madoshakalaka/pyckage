@@ -87,6 +87,7 @@
     "@marshallofsound/webpack-asset-relocator-loader": "^0.5.0",
     "copy-webpack-plugin": "^5.0.3",
     "electron": "5.0.7",
+    "mustache": "^3.0.1",
     "node-loader": "^0.6.0"
   }
 }

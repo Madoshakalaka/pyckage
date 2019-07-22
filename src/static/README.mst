@@ -1,0 +1,44 @@
+# {{git-repo-name}}
+![travis-badge](https://travis-ci.org/{{github-username}}/{{git-repo-name}}.svg?branch=master)
+
+{{github-description}}
+
+## Showcase
+
+<!--You picture won't show on pypi if you use relative path.-->
+<!--If you want to add any image, please add the image to readme_assets folder and add the filename as below-->
+<!--![some show case picture](https://raw.githubusercontent.com/{{github-username}}/{{git-repo-name}}/master/readme_assets/showcasePicture.png)-->
+
+
+## How to Use
+
+
+`pip install {{package-name}}`
+
+<!--
+
+add some help here 
+
+```python
+
+```
+
+-->
+
+
+
+Pip creates command line executable entry point by default
+
+You should be able to run shell command `$ {{command-name}}` anywhere.
+
+<!--
+add some command help here
+
+
+- `$ {{command-name}} -i filename`
+    - output: `hello world`
+
+-->
+
+- `$ {{command-name}} -h` for more help
+

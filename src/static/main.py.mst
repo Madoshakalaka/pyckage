@@ -3,7 +3,7 @@ import argparse
 
 def cmd():
     parser = argparse.ArgumentParser(
-        description="pykage:package-description:"
+        description="{{package-description}}"
     )
 
     # parser.add_argument(
@@ -15,15 +15,13 @@ def cmd():
 
     argv = parser.parse_args()
 
+
     # add your command line program here
 
-    print("reserved command line entry for python package pykage:package-name:")
-
-
+    print("reserved command line entry for python package {{package-name}}")
 
 def main():
     # add whatever here
-    pass
 
 
 if __name__ == "__main__":
