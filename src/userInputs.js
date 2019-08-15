@@ -128,6 +128,7 @@ package_name_input.focusout(()=>{
     const name = package_name_input.val();
     const loading = $("#package-check-loading");
     const error = $("#package-check-error");
+    const no_python_message = $('#no-python-message')
     const duplicate = $("#package-duplicate-error");
     const available = $("#package-available-message");
 
@@ -141,26 +142,19 @@ package_name_input.focusout(()=>{
 
 
     if (name !== ""){
-        const pip_query = spawn('pip3', ['search', name]);
-        loading.fadeIn("slow");
 
-        let entireData="";
-        let errorData = "";
-        pip_query.stdout.on('data', (data) => {
-            entireData +=  data.toString();
-        });
-
-        pip_query.stderr.on('data', (data) => {
-            errorData += data.toString();
-        });
-
-        pip_query.on('close', (code) => {
+        function display_outcome(does_python_exist){
+            // in case the input changed during pypi query
             if (name === package_name_input.val()){
 
                 loading.hide();
                 if (errorData !== ""){
                     console.log(errorData)
                     error.fadeIn('fast');
+                }
+                else if (! does_python_exist){
+                    console.log('nonon')
+                    no_python_message.show();
                 }
                 else{
                     const names = extractNames(entireData);
@@ -175,9 +169,59 @@ package_name_input.focusout(()=>{
                 }
 
             }
+            else{
+                loading.hide();
+            }
+
+        }
 
 
+        const pip_query = spawn('python3', ['-m', 'pip', 'search', name]);
+        loading.fadeIn("slow");
 
+        let entireData="";
+        let errorData = "";
+        pip_query.stdout.on('data', (data) => {
+            entireData +=  data.toString();
+        });
+
+        pip_query.stderr.on('data', (data) => {
+            errorData += data.toString();
+        });
+
+        let no_python3 = false
+        let no_python = false
+        pip_query.on('error', (err) => {
+            no_python3 = true
+
+            // fall back from python3 to python
+            const python_pip_query = spawn('python', ['-m', 'pip', 'search', name]);
+            entireData = ""
+            errorData = ""
+
+            python_pip_query.stdout.on('data', (data) => {
+                entireData +=  data.toString();
+            });
+
+            python_pip_query.stderr.on('data', (data) => {
+                errorData += data.toString();
+            });
+
+            python_pip_query.on('error', (err) => {
+                no_python = true
+            })
+
+            python_pip_query.on('close', (code) => {
+                display_outcome(! no_python)
+            });
+
+        })
+
+        pip_query.on('close', (code) => {
+            if (! no_python3){
+                display_outcome(true)
+
+            }
 
         });
 

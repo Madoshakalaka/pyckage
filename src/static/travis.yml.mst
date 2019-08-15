@@ -16,7 +16,7 @@ jobs:
     script: ''
     deploy:
       provider: pypi
-      user: pykage:pypi-user-name:
+      user: {{pypi-user-name}}
       password:
         #secure: encrypted password
       on:

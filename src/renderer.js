@@ -43,18 +43,16 @@ function replaceArgument(original, tag, substitute){
         const last = begin + tag.length+8;
         res = res.substring(0, begin) + substitute + res.substring(last);
     }
-
-
     return res;
 }
 
 function writeTemplate(templateFile, lookup, ...paths){
     let content = fs.readFileSync(rendererPath(templateFile)).toString();
-    $.each(lookup, (tag, value) => {
-
-        content = replaceArgument(content, tag, value);
-
-    });
+    content = Mustache.render(content, lookup)
+    // $.each(lookup, (tag, value) => {
+    //
+    //     content = replaceArgument(content, tag, value);
+    // });
 
     fs.writeFileSync(path.join.apply(null, paths), content);
     return content;
@@ -110,10 +108,10 @@ button.click(()=>{
             fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '');
 
 
-            writeTemplate('main.py', lookup, projectFolder, packageName, 'main.py');
+            writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py');
 
 
-            writeTemplate('main_test.py', lookup, projectFolder, 'tests', 'main_test.py');
+            writeTemplate('main_test.py.mst', lookup, projectFolder, 'tests', 'main_test.py');
 
 
             // content = fs.readFileSync(rendererPath('main_test.py')).toString();
@@ -125,13 +123,13 @@ button.click(()=>{
             fs.writeFileSync(path.join(projectFolder, ".gitignore"), content);
 
 
-            writeTemplate('travis.yml', lookup, projectFolder, '.travis.yml');
+            writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml');
 
-            writeTemplate('LICENSE', lookup, projectFolder, 'LICENSE');
+            writeTemplate('LICENSE.mst', lookup, projectFolder, 'LICENSE');
 
-            writeTemplate('README.md', lookup, projectFolder, 'README.md');
+            writeTemplate('README.md.mst', lookup, projectFolder, 'README.md');
 
-            writeTemplate('setup.py', lookup, projectFolder, 'setup.py');
+            writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py');
 
             writeTemplate('pykage-todo.txt', lookup, projectFolder, 'pykage-todo.txt');
 
