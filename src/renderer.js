@@ -2,7 +2,7 @@ const $ = require("jquery");
 const path = require('path');
 const inputs = require("./userInputs");
 const fs = require('fs');
-
+const Mustache = require('mustache');
 const {app} = require('electron').remote;
 
 const appPath = app.getAppPath();
@@ -119,10 +119,8 @@ button.click(()=>{
             // content = replaceArgument(content, 'command-name', commandName);
             // fs.writeFileSync(path.join(projectFolder, 'tests', "main_test.py"), content);
 
-            content = fs.readFileSync(rendererPath('gitignore')).toString();
-            fs.writeFileSync(path.join(projectFolder, ".gitignore"), content);
 
-
+            writeTemplate('gitignore.mst', lookup, projectFolder, 'gitignore');
             writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml');
 
             writeTemplate('LICENSE.mst', lookup, projectFolder, 'LICENSE');
@@ -131,7 +129,7 @@ button.click(()=>{
 
             writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py');
 
-            writeTemplate('pykage-todo.txt', lookup, projectFolder, 'pykage-todo.txt');
+            writeTemplate('pykage-todo.txt.mst', lookup, projectFolder, 'pykage-todo.txt');
 
             generating.hide();
             manual_instruction_list.show();
