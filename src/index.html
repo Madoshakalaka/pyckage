@@ -1,7 +1,11 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="main_window/css/bootstrap.min.css">
+<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+<!--    <script src="js/jquery.min.js"></script>-->
+<!--    <script src="js/bootstrap.min.js"></script>-->
     <title></title>
 
     <style>
@@ -18,6 +22,81 @@
       }
       .message {
         color: green;
+      }
+
+      /* Optin Tooltip */
+      .with-tooltip label {
+        cursor: pointer;
+      }
+
+      .with-tooltip input[type="checkbox"] {
+        vertical-align: middle;
+      }
+      .with-tooltip a {
+        text-decoration: none;
+      }
+      .with-tooltip [data-tip] {
+        position: relative;
+        cursor: help;
+      }
+      .with-tooltip [data-tip]:before {
+        content: "";
+        display: none;
+        border: 5px solid transparent;
+        border-top-color: #1a1a1a;
+        position: absolute;
+        top: -7px;
+        left: 3px;
+        z-index: 8;
+        font-size: 0;
+        line-height: 0;
+        width: 0;
+        height: 0;
+      }
+      .with-tooltip [data-tip]:after {
+        display: none;
+        content: attr(data-tip);
+        position: absolute;
+        top: -35px;
+        left: -0px;
+        padding: 5px 8px;
+        background: #1a1a1a;
+        color: #fff;
+        z-index: 9;
+        font-size: 0.8em;
+        height: 18px;
+        line-height: 18px;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+        white-space: normal;
+        word-wrap: normal;
+        text-align: center;
+        text-decoration: none;
+      }
+      .with-tooltip [data-tip]:hover:before,
+      .with-tooltip [data-tip]:hover:after {
+        display: block;
+      }
+      .with-tooltip .tip-above[data-tip]:after {
+        top: -108px;
+        left: -101px;
+        height: 92px;
+        width: 210px;
+      }
+      .with-tooltip .tip-below[data-tip]:after {
+        top: 22px;
+        left: -101px;
+        height: 92px;
+        width: 210px;
+      }
+      .with-tooltip .tip-below[data-tip]:before {
+        border-top-color: transparent;
+        border-right-color: transparent;
+        border-bottom-color: #1a1a1a;
+        border-left-color: transparent;
+        top: 13px;
+        left: 5px;
       }
 
     </style>
@@ -86,7 +165,38 @@
   <input type="checkbox" id="python-version-37" class="python-version auto-save"><label for="python-version-37">3.7</label><br>
 
   <br>
-  <input type="checkbox" id="create-cmd-entry"><label for="create-cmd-entry">Create Command Line Entry</label>
+
+  <div class="container">
+      <h2>Question-sign Glyph</h2>
+      <p>Question-sign icon: <span class="glyphicon glyphicon-question-sign"></span></p>
+      <p>Question-sign icon as a link:
+          <a href="#">
+              <span class="glyphicon glyphicon-question-sign"></span>
+          </a>
+      </p>
+      <p>Question-sign icon on a button:
+          <button type="button" class="btn btn-default btn-sm">
+              <span class="glyphicon glyphicon-question-sign"></span> Question
+          </button>
+      </p>
+      <p>Question-sign icon on a styled link button:
+          <a href="#" class="btn btn-info btn-lg">
+              <span class="glyphicon glyphicon-question-sign"></span> Question
+          </a>
+      </p>
+  </div>
+
+  <div class="with-tooltip">
+    <label for="create-cmd-entry"><input type="checkbox" id="create-cmd-entry">Create Command Line Entry</label>
+    <div class="container">
+      <a href="#"
+         data-tip="We will not share your information with anyone., but if you'd like to opt out of our email list,you can easily do so by following the instructions in any email you receive"
+         class="tip-above">
+        <span class="glyphicon glyphicon-question-sign"></span>
+      </a>
+    </div>
+
+  </div>
 
   <br>
   <label for="command-name">Command name:</label>

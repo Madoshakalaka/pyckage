@@ -314,6 +314,10 @@ inputs.getPypiUsername = () =>{
     return $("#pypi-user-name").val();
 };
 
+inputs.getCreateCmdEntry = ()=>{
+    return $("#create-cmd-entry").is(":checked");
+};
+
 inputs.getCommandName = ()=>{
     return $("#command-name").val();
 };

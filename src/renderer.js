@@ -70,6 +70,7 @@ button.click(()=>{
         const packageName = inputs.getPackageName();
         const projectFolder = path.join(inputs.getRootFolder(), packageName);
         const description = inputs.getDescription();
+        const createCmdEntry = inputs.getCreateCmdEntry();
         const commandName = inputs.getCommandName();
         const pypiUsername = inputs.getPypiUsername();
         const licensePersonName = inputs.getLicensePersonName();
@@ -84,6 +85,7 @@ button.click(()=>{
             'package-name':packageName,
             'package-description':description,
             'module-folder':packageName,
+            'create-cmd-entry':createCmdEntry,
             'command-name':commandName,
             'pypi-user-name':pypiUsername,
             'license-person-name': licensePersonName,
@@ -110,15 +112,9 @@ button.click(()=>{
 
             writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py');
 
+            writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py');
 
             writeTemplate('main_test.py.mst', lookup, projectFolder, 'tests', 'main_test.py');
-
-
-            // content = fs.readFileSync(rendererPath('main_test.py')).toString();
-            // content = replaceArgument(content, 'module-folder', packageName);
-            // content = replaceArgument(content, 'command-name', commandName);
-            // fs.writeFileSync(path.join(projectFolder, 'tests', "main_test.py"), content);
-
 
             writeTemplate('gitignore.mst', lookup, projectFolder, 'gitignore');
             writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml');

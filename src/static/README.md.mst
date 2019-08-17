@@ -42,3 +42,6 @@ add some command help here
 
 - `$ {{command-name}} -h` for more help
 
+in case the command does not work (you are using stupid windows or something). Use the package entry:
+
+`> python -m {{package-name}}`

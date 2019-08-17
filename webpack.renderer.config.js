@@ -6,6 +6,9 @@ module.exports = {
     rules: require('./webpack.rules'),
   },
   plugins: [
-    new CopyWebpackPlugin( [{from:'src/static/*',to: 'main_window', flatten:true, dot:true}])
+    new CopyWebpackPlugin( [{from:'src/static/*',to: 'main_window', flatten:true, dot:true}]),
+    new CopyWebpackPlugin( [{from:'css/*.css',to: 'main_window', context:'src/'}]),
+    new CopyWebpackPlugin( [{from:'fonts/*',to: 'main_window', context:'src/'}]),
+    new CopyWebpackPlugin( [{from:'js/*',to: 'main_window', context:'src/'}])
   ]
 };

@@ -1,4 +1,4 @@
-
+const path = require('path');
 
 module.exports = [
   // Add support for native node modules
@@ -8,6 +8,7 @@ module.exports = [
   },
   {
     test: /\.(m?js|node)$/,
+    exclude: path.resolve(__dirname, "src/js"),
     parser: { amd: false },
     use: {
       loader: '@marshallofsound/webpack-asset-relocator-loader',
