@@ -3,7 +3,7 @@
   "productName": "pyckage",
   "version": "1.0.4",
   "description": "Create python package template, setup up travis ci and release to pypi all in one keypress",
-  "main": ".webpack/main",
+  "main": "./.webpack/main",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",
