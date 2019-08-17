@@ -148,7 +148,10 @@ package_name_input.focusout(()=>{
             if (name === package_name_input.val()){
 
                 loading.hide();
-                if (errorData !== ""){
+
+                // pip gives warning: You are using pip version 10.0.1, however version 19.2.2 is available.
+                // You should consider upgrading via the 'python -m pip install --upgrade pip' command.
+                if (errorData !== "" && ! errorData.includes('python -m pip install --upgrade pip')){
                     console.log(errorData)
                     error.fadeIn('fast');
                 }
