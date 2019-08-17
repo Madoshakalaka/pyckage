@@ -8,7 +8,7 @@ module.exports = [
   },
   {
     test: /\.(m?js|node)$/,
-    exclude: path.resolve(__dirname, "src/js"),
+    // exclude: path.resolve(__dirname, "src/js"),
     parser: { amd: false },
     use: {
       loader: '@marshallofsound/webpack-asset-relocator-loader',
