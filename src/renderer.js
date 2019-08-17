@@ -11,9 +11,7 @@ function rendererPath(p){
     return path.join(appPath, '.webpack', 'renderer', 'main_window',p);
 }
 
-const manual_instruction_list = $("#manual-instruction-list");
-
-const explanation = $("#explanation");
+// const explanation = $("#explanation");
 
 const pypi_license_strings = {'MIT':"License :: OSI Approved :: MIT License"};
 
@@ -128,8 +126,8 @@ button.click(()=>{
             writeTemplate('pykage-todo.txt.mst', lookup, projectFolder, 'pykage-todo.txt');
 
             generating.hide();
-            manual_instruction_list.show();
-            explanation.show();
+
+            // explanation.show();
             $("#generation-complete-message").fadeIn('slow').fadeOut('slow');
 
         }

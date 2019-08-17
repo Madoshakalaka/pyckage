@@ -196,18 +196,5 @@
   <p hidden class="message" id="generation-complete-message">Generation Complete<p>
   <button id="generate-button">Generate</button>
 
-
-  <ul id="manual-instruction-list" hidden>To Do
-    <li>Push the generated project to github</li>
-    <li>Go on travis CI and add the newly created repo</li>
-    <li>Cd to the newly created project</li>
-    <li><strong>python setup.py sdist</strong></li>
-    <li><strong>python -m twine upload dist/*</strong> It will prompt you for your pypi username and password</li>
-    <li><strong>travis encrypt your-travis-password-here --add deploy.password</strong> to encryt your password as a secure password. It will append it to the end of the file. Open <strong>.travis.yml</strong> and move the added secure password to the commented out line</li>
-    <li>Enjoy - start to write your packages and fill the tests</li>
-  </ul>
-  <br>
-  <p id="explanation" hidden>If you do everything following the instruction. If you just change the version string in setup.py everytime you want to publish a new package version, every tagged push to github will automatically trigger a pypi release.</p>
-
   </body>
 </html>

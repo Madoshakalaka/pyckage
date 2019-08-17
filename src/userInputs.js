@@ -2,9 +2,8 @@ const $ = require("jquery");
 const store = require("./store");
 const { spawn } = require('child_process');
 
-const manual_instruction_list = $("#manual-instruction-list");
 
-const explanation = $("#explanation");
+// const explanation = $("#explanation");
 
 inputs = {};
 // const pip_query = spawn('pip', ['-lh', '/usr']);
@@ -132,8 +131,7 @@ package_name_input.focusout(()=>{
     const duplicate = $("#package-duplicate-error");
     const available = $("#package-available-message");
 
-    explanation.hide();
-    manual_instruction_list.hide();
+    // explanation.hide();
 
     available.hide();
     duplicate.hide();
