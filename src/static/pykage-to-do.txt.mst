@@ -1,0 +1,19 @@
+todo: these
+
+1. Push the generated project to github
+
+2. {{virtual-env-instruction}}
+
+3. Write code to make the project work (ready to be published, or a prototype)
+
+4. Go on travis CI and add the newly created repo
+
+5. Cd to the newly created project
+
+6. python setup.py sdist
+
+7. python -m twine upload dist/*
+
+8. travis encrypt your-password-here --add deploy.password to encrypt your password as a secure password. It will append it to the end of the file. Open .travis.yml and move the added secure password to the commented out line
+
+If you do everything following the instruction. If you just change the version string in setup.py every time you want to publish a new package version, every tagged push to github will automatically trigger a pypi release.

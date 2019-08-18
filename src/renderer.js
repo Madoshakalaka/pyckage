@@ -67,7 +67,7 @@ button.click(()=>{
     if (isInputOK){
         const packageName = inputs.getPackageName();
         const projectFolder = path.join(inputs.getRootFolder(), packageName);
-        const description = inputs.getDescription();
+        const description = inputs.getPackageDescription();
         const createCmdEntry = inputs.getCreateCmdEntry();
         const commandName = inputs.getCommandName();
         const pypiUsername = inputs.getPypiUsername();
@@ -78,6 +78,7 @@ button.click(()=>{
         const githubDescription = inputs.getPackageDescription();
         const authorOnPypi = inputs.getAuthorOnPypi();
         const authorEmail = inputs.getAuthorEmail();
+        const dependencyChoice = inputs.getDependencyChoice();
 
         const lookup = {
             'package-name':packageName,
@@ -94,6 +95,9 @@ button.click(()=>{
             'author-on-pypi':authorOnPypi,
             'author-email': authorEmail,
         };
+        if (dependencyChoice === 'pipfile') lookup['virtual-env-instruction'] = 'pipenv install --dev'
+        else if (dependencyChoice === 'requirements') lookup['virtual-env-instruction'] = 'pip install -r requirements'
+
 
         generating.fadeIn('slow');
 
@@ -110,7 +114,16 @@ button.click(()=>{
 
             writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py');
 
-            writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py');
+            if (createCmdEntry){
+                writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py');
+            }
+
+            if (dependencyChoice === 'pipfile'){
+                writeTemplate('pipfile.mst', lookup, projectFolder, 'pipfile');
+            }
+            else if (dependencyChoice === 'requirements'){
+                writeTemplate('requirements.txt.mst', lookup, projectFolder, 'requirements.txt');
+            }
 
             writeTemplate('main_test.py.mst', lookup, projectFolder, 'tests', 'main_test.py');
 
@@ -123,7 +136,7 @@ button.click(()=>{
 
             writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py');
 
-            writeTemplate('pykage-todo.txt.mst', lookup, projectFolder, 'pykage-todo.txt');
+            writeTemplate('pykage-to-do.txt.mst', lookup, projectFolder, 'pykage-to-do.txt');
 
             generating.hide();
 

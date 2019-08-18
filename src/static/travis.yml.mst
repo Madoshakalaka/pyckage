@@ -1,8 +1,5 @@
 language: python
 dist: xenial
-install: pip install -e .
-script:
-- pytest
 stages:
 - test
 - deploy
@@ -16,7 +13,7 @@ jobs:
     script: ''
     deploy:
       provider: pypi
-      user: {{pypi-user-name}}
+      user: Madoshakalaka
       password:
         #secure: encrypted password
       on:

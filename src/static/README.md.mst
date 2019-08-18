@@ -42,6 +42,6 @@ add some command help here
 
 - `$ {{command-name}} -h` for more help
 
-in case the command does not work (you are using stupid windows or something). Use the package entry:
+in case the command does not work (e.g. on windows when <python_dir>/Scripts is not in system path). Use the package entry:
 
 `> python -m {{package-name}}`

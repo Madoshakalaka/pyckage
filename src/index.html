@@ -2,10 +2,19 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<!--    <script src="js/jquery.min.js"></script>-->
+
+    <script>
+      window.jQuery = window.$ = require('jquery');
+    </script>
+
     <link rel="stylesheet" href="css/bootstrap.min.css">
 <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
-<!--    <script src="js/jquery.min.js"></script>-->
+    <script>require('bootstrap')</script>
 <!--    <script src="js/bootstrap.min.js"></script>-->
+
     <title></title>
 
     <style>
@@ -103,13 +112,14 @@
 
   </head>
   <body>
-  <h1 class="lmao">Pykage</h1>
-  <p hidden class="warning" id="no-python-message">Cannot locate python exe to access Pypi<p>
-  <p hidden class="message" id="package-available-message">Package name available<p>
-  <p hidden class="warning" id="package-duplicate-error">Package with the same name exists<p>
-  <p hidden class="error" id="package-empty-error">Please give package a name<p>
-  <p hidden class="loading" id="package-check-loading">Checking name availability from pypi...<p>
-  <p hidden class="error" id="package-check-error">Error happened. Can't check availability<p>
+  <h1>Pykage</h1>
+
+  <p hidden class="warning" id="no-python-message">Cannot locate python exe to access Pypi</p>
+  <div hidden class="alert alert-success" role="alert" id="package-available-message">Package name available</div>
+  <p hidden class="warning" id="package-duplicate-error">Package with the same name exists</p>
+  <p hidden class="error" id="package-empty-error">Please give package a name</p>
+  <p hidden class="loading" id="package-check-loading">Checking name availability from pypi...</p>
+  <p hidden class="error" id="package-check-error">Error happened. Can't check availability</p>
   <label for="package-name">Package Name:</label>
   <input id="package-name" placeholder="All lowercase; no space">
 
@@ -159,10 +169,34 @@
   <input id="author-email" placeholder="You email displayed on pypi" class="auto-save">
   <br>
 
-  <h3>python version</h3>
+  <label for="dependency-choices">dependency</label>
+
+  <div class="btn-group" data-toggle="buttons" id="dependency-choices">
+    <label class="btn btn-primary active">
+      <input type="radio" name="options" id="pipfile" checked> pipfile
+    </label>
+    <label class="btn btn-primary">
+      <input type="radio" name="options" id="requirements" autocomplete="off"> requirements.txt
+    </label>
+
+  </div>
+
+
+<!--  <div class="btn-group" role="group" aria-label="...">-->
+<!--    <button type="button" class="btn btn-default">requirements.txt</button>-->
+<!--    <button type="button" class="btn btn-default">pipfile</button>-->
+<!--  </div>-->
+
+  <h3 class="with-tooltip">python version<a href="#"
+                       data-tip="Tests in multiple python versions in travis.yml. Python version required in setup.py"
+                       class="tip-above">
+    <span class="glyphicon glyphicon-question-sign"></span>
+  </a></h3>
+
   <label for="python-version-35" class="pointer-cursor"><input type="checkbox" id="python-version-35" class="python-version auto-save">3.5</label><br>
   <input type="checkbox" id="python-version-36" class="python-version auto-save"><label for="python-version-36" class="pointer-cursor">3.6</label><br>
   <input type="checkbox" id="python-version-37" class="python-version auto-save"><label for="python-version-37" class="pointer-cursor">3.7</label><br>
+
 
   <br>
 

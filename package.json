@@ -23,8 +23,7 @@
           "config": {
             "repository": {
               "owner": "Madoshakalaka",
-              "name": "pykage",
-              "iconUrl": "./pyckage_icon.ico"
+              "name": "pykage"
             }
           }
         }
@@ -33,7 +32,8 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "Pyckage"
+            "name": "Pyckage",
+            "iconUrl": "https://raw.githubusercontent.com/Madoshakalaka/pykage/master/pyckage_icon.ico"
           }
         },
         {
@@ -72,6 +72,7 @@
     }
   },
   "dependencies": {
+    "bootstrap": "^3.4.1",
     "cross-env": "^5.2.0",
     "electron-css": "^0.13.3",
     "electron-squirrel-startup": "^1.0.0",

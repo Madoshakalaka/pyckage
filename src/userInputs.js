@@ -49,18 +49,46 @@ function prepareCheckboxSwitch(checkbox, elements){
 
 function prepareAutoSaveLoad(element){
     const type = (element.attr('type'));
-    if (type === "checkbox"){
+    if (type === "checkbox" || type === "radio"){
 
-        element.change(()=>{
-            const checked = element.prop('checked');
-            store.set(element.attr("id"), checked);
-        });
+        if (type === 'radio'){
+
+            element.parent().click(()=>{
+                // const lmao = element.parent()(':active')
+                dependency_radio_inputs.each((i, obj) =>{
+                    store.set($(obj).attr("id"), false);
+                })
+                store.set(element.attr("id"), true);
+            });
+
+
+        }
+        else{
+
+            element.change(()=>{
+
+                const checked = element.prop('checked');
+                store.set(element.attr("id"), checked);
+
+
+            });
+        }
+
 
         const stored = store.get(element.attr("id"));
 
         if (stored === true){
             // alert(stored);
             element.prop('checked', true);
+
+            if (type === 'radio'){
+                element.parent().addClass('active')
+            }
+        }
+        else{
+            if (type === 'radio'){
+                element.parent().removeClass('active')
+            }
         }
 
 
@@ -103,6 +131,7 @@ const url_on_pypi = $("#url-on-pypi");
 const author_on_pypi = $("#author-on-pypi");
 const author_email = $("#author-email");
 const python_version_boxes = $(".python-version");
+const dependency_radio_inputs = $("#dependency-choices input")
 
 const create_cmd_entry_checkbox = $("#create-cmd-entry");
 const command_name_input = $("#command-name");
@@ -239,10 +268,8 @@ prepareAutoSaveLoad(github_username);
 prepareAutoSaveLoad(author_email);
 prepareAutoSaveLoad(author_on_pypi);
 
-// console.log(python_version_boxes);
-
 python_version_boxes.each((i, obj)=>prepareAutoSaveLoad($(obj)));
-
+dependency_radio_inputs.each((i, obj)=>prepareAutoSaveLoad($(obj)))
 
 prepareAutoDecide([license_person_name_input], author_on_pypi, (e)=>{return e[0].val()});
 prepareAutoDecide([package_name_input], git_repo_name_input, (e)=>{return e[0].val()});
@@ -258,19 +285,6 @@ prepareAutoDecide([git_repo_name_input, github_username], url_on_pypi, (elements
 
 prepareAutoDecide([package_name_input],command_name_input, (elements)=>{return elements[0].val()});
 
-// git_repo_name_input.on("input", ()=>{
-//     const repo_name = git_repo_name_input.val();
-//     const username = github_username.val();
-//
-//     if (repo_name !== "" && username !== ""){
-//         url_on_pypi.val("https://github.com/" + username+ "/" + repo_name)
-//
-//     }
-//     else{
-//         url_on_pypi.val("")
-//     }
-// });
-
 inputs.prepareForSaves = () => {
 
   license_person_name_input.focusout((e)=>{
@@ -279,7 +293,6 @@ inputs.prepareForSaves = () => {
   });
     github_username.focusout((e)=>{
         store.set("github_username", github_username.val());
-
     })
 
 };
@@ -328,8 +341,12 @@ inputs.getPackageName = () =>{
     return $("#package-name").val();
 };
 
-inputs.getDescription = () =>{
-    return $("#package-description").val();
+/**
+ *
+ * @returns {"requirements"|"pipfile"}
+ */
+inputs.getDependencyChoice = () =>{
+    return dependency_radio_inputs.filter(":checked").attr('id');
 };
 
 inputs.checkCompleteness= ()=>{
