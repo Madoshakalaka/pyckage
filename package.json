@@ -23,7 +23,8 @@
           "config": {
             "repository": {
               "owner": "Madoshakalaka",
-              "name": "pykage"
+              "name": "pykage",
+              "iconUrl": "./pyckage_icon.ico"
             }
           }
         }
@@ -32,7 +33,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "pyckage"
+            "name": "Pyckage"
           }
         },
         {
