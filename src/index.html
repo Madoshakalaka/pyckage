@@ -181,11 +181,11 @@
 <label for="dependency-choices">dependency</label>
 
 <div class="btn-group" data-toggle="buttons" id="dependency-choices">
-    <label class="btn btn-primary active">
-        <input type="radio" name="options" id="pipfile" checked> pipfile
+    <label class="btn btn-primary active" id="pipfile">
+        <input type="radio" name="options" checked> pipfile
     </label>
-    <label class="btn btn-primary">
-        <input type="radio" name="options" id="requirements" autocomplete="off"> requirements.txt
+    <label class="btn btn-primary" id="requirements">
+        <input type="radio" name="options" autocomplete="off"> requirements.txt
     </label>
 
 </div>
@@ -193,12 +193,25 @@
 <br>
 <br>
 
+<label for="test-style">test style</label>
+
+<div class="btn-group" data-toggle="buttons" id="test-style">
+    <label class="btn btn-primary active" id="pytest">
+        <input type="radio" name="options" checked>pytest
+    </label>
+    <label class="btn btn-primary" id="unittest">
+        <input type="radio" name="options" autocomplete="off"> unittest
+    </label>
+</div>
+
+<br><br>
+
 <label for="starting-dev-dependencies">dev tools</label>
 
 <!--todo: allow opt-out-->
 <div class="btn-group" data-toggle="buttons" id="starting-dev-dependencies">
     <label class="btn btn-primary active disabled">
-        <input type="checkbox">pytest
+        <input type="checkbox"> pytest
     </label>
     <label class="btn btn-primary active disabled">
         <input type="checkbox"> pytest-cov
@@ -212,7 +225,7 @@
 </div>
 <br>
 <br>
-<div class="well well-sm">You are not allowed to opt-out these dev tools. They are all good stuff</div>
+<div class="well well-sm">You are not allowed to opt-out these dev tools. They are awesome</div>
 
 <h3 class="with-tooltip">python version<a href="#"
                                           data-tip="Affects travis.yml. Version_requires keyword in setup.py"

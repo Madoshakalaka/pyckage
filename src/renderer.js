@@ -70,11 +70,18 @@ function ensureDirSync (dirpath) {
     }
 }
 
+/**
+ * @param {string} packageName
+ * @returns {string}
+ */
+function packageNameToFolderName(packageName){
+    return packageName.replace('-', '_')
+}
 
 const button = $("#generate-button")
 const generating = $("#generating")
 
-button.click(() => {
+button.on('click',() => {
         button.attr("disabled", true)
         const isInputOK = inputs.checkCompleteness()
         if (isInputOK) {
@@ -96,12 +103,15 @@ button.click(() => {
             const githubDescription = inputs.getPackageDescription()
             const authorOnPypi = inputs.getAuthorOnPypi()
             const authorEmail = inputs.getAuthorEmail()
-            const dependencyChoice = inputs.getDependencyChoice()
 
+            // choose ones
+            const dependencyChoice = inputs.getDependencyChoice()
+            const testStyle = inputs.getTestStyle()
+            console.log('create-cmd-entry', createCmdEntry)
             const lookup = {
                 'package-name': packageName,
                 'package-description': description,
-                'module-folder': packageName,
+                'package-folder-name': packageNameToFolderName(packageName),
                 'python-versions': pythonVersions,
                 'os': os,
                 'create-cmd-entry': createCmdEntry,
@@ -115,10 +125,18 @@ button.click(() => {
                 'author-on-pypi': authorOnPypi,
                 'author-email': authorEmail,
             }
+
             if (dependencyChoice === 'pipfile') lookup['virtual-env-instruction'] = 'pipenv install --dev'
             else if (dependencyChoice === 'requirements') lookup['virtual-env-instruction'] = 'pip install -r requirements'
 
-
+            let testFileTemplate = ''
+            if (testStyle === 'pytest'){
+                testFileTemplate = 'pytest__main_test.py.mst'
+            }else{ // unittest
+                testFileTemplate = 'unittest__main_test.py.mst'
+            }
+            // todo: remove requirements/pipfile if chosen otherwise
+            // todo: pytest__main_test.py.mst
             generating.fadeIn('slow')
             function createFiles() {
                 ensureDirSync(projectFolder)
@@ -132,9 +150,12 @@ button.click(() => {
 
 
                 writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py')
-
+                // console.log(createCmdEntry)
                 if (createCmdEntry) {
                     writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py')
+                }
+                else{
+                    fs.unlinkSync(path.join(projectFolder, packageName, '__main__.py'))
                 }
 
                 if (dependencyChoice === 'pipfile') {
@@ -143,7 +164,7 @@ button.click(() => {
                     writeTemplate('requirements.txt.mst', lookup, projectFolder, 'requirements.txt')
                 }
 
-                writeTemplate('main_test.py.mst', lookup, projectFolder, 'tests', 'main_test.py')
+                writeTemplate(testFileTemplate, lookup, projectFolder, 'tests', 'main_test.py')
 
                 writeTemplate('gitignore.mst', lookup, projectFolder, '.gitignore')
                 writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml')

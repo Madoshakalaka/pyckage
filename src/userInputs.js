@@ -47,15 +47,19 @@ function prepareCheckboxSwitch(checkbox, elements){
 
 }
 
+/**
+ *
+ * @param {jQuery} element
+ */
 function prepareAutoSaveLoad(element){
     const type = (element.attr('type'));
-    if (type === "checkbox" || type === "radio"){
+    const isBS3Btn = element.hasClass('btn')
+    if (type === "checkbox" || isBS3Btn){
 
-        if (type === 'radio'){
+        if (isBS3Btn){
 
-            element.parent().click(()=>{
-                // const lmao = element.parent()(':active')
-                dependency_radio_inputs.each((i, obj) =>{
+            element.click(()=>{
+                element.siblings().each((i, obj) =>{
                     store.set($(obj).attr("id"), false);
                 })
                 store.set(element.attr("id"), true);
@@ -78,20 +82,20 @@ function prepareAutoSaveLoad(element){
         const stored = store.get(element.attr("id"));
 
         if (stored === true){
-            // alert(stored);
-            element.prop('checked', true);
 
-            if (type === 'radio'){
-                element.parent().addClass('active')
+            if (isBS3Btn){
+
+                element.addClass('active')
+            }
+            else{
+                element.prop('checked', true);
             }
         }
         else{
-            if (type === 'radio'){
-                element.parent().removeClass('active')
+            if (isBS3Btn){
+                element.removeClass('active')
             }
         }
-
-
 
     }
     else{
@@ -131,7 +135,8 @@ const url_on_pypi = $("#url-on-pypi");
 const author_on_pypi = $("#author-on-pypi");
 const author_email = $("#author-email");
 const python_version_boxes = $(".python-version");
-const dependency_radio_inputs = $("#dependency-choices input")
+const dependencyChoiceBtns = $("#dependency-choices label")
+const testStyleBtns = $("#test-style label")
 
 const create_cmd_entry_checkbox = $("#create-cmd-entry");
 const command_name_input = $("#command-name");
@@ -269,7 +274,9 @@ prepareAutoSaveLoad(author_email);
 prepareAutoSaveLoad(author_on_pypi);
 
 python_version_boxes.each((i, obj)=>prepareAutoSaveLoad($(obj)));
-dependency_radio_inputs.each((i, obj)=>prepareAutoSaveLoad($(obj)))
+dependencyChoiceBtns.each((i, obj)=>prepareAutoSaveLoad($(obj)))
+testStyleBtns.each((i, obj)=>prepareAutoSaveLoad($(obj)))
+
 
 prepareAutoDecide([license_person_name_input], author_on_pypi, (e)=>{return e[0].val()});
 prepareAutoDecide([package_name_input], git_repo_name_input, (e)=>{return e[0].val()});
@@ -364,8 +371,17 @@ inputs.getPackageName = () =>{
  * @returns {"requirements"|"pipfile"}
  */
 inputs.getDependencyChoice = () =>{
-    return dependency_radio_inputs.filter(":checked").attr('id');
+    return dependencyChoiceBtns.filter(".active").attr('id');
 };
+
+/**
+ *
+ * @returns {"pytest"|"unittest"}
+ */
+inputs.getTestStyle = () =>{
+    return testStyleBtns.filter(".active").attr('id');
+};
+
 
 inputs.checkCompleteness= ()=>{
 

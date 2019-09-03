@@ -1,8 +1,9 @@
 {{#create-cmd-entry}}
 import argparse
+import sys
 
 
-def cmd():
+def cmd_entry(argv=sys.argv):
     # todo: fill command line functionality
 
     parser = argparse.ArgumentParser(description="{{package-description}}")
@@ -14,7 +15,7 @@ def cmd():
     #     help="blah",
     # )
 
-    argv = parser.parse_args()
+    argv = parser.parse_args(argv)
 
     # add your command line program here
 
