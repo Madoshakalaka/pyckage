@@ -1,20 +1,127 @@
+{{#os.linux}}
 language: python
 dist: xenial
+{{/os.linux}}
+{{^os.windows-only}}
+# only intended for Linux and Mac jobs. Windows will overwrite install and script
+install: python3 -m pip install tox
+script: python3 -m tox
+{{/os.windows-only}}
 stages:
-- test
-- deploy
+  - test
+  - "PYPI release"
 jobs:
   include:
-  - python: '3.7'
-  - python: '3.6'
-  - python: '3.5'
-  - stage: deploy
-    install: ''
-    script: ''
-    deploy:
-      provider: pypi
-      user: Madoshakalaka
-      password:
-        #secure: encrypted password
-      on:
-        tags: true
+{{#os.linux}}
+    # linux
+{{#python-versions.py37}}
+    - python: '3.7'
+{{/python-versions.py37}}
+{{#python-versions.py36}}
+    - python: '3.6'
+{{/python-versions.py36}}
+{{#python-versions.py35}}
+    - python: '3.5'
+{{/python-versions.py35}}
+{{/os.linux}}
+{{#os.mac}}
+  {{#python-versions.py37}}
+    # osx python 3.7
+    - name: "Python: 3.7"
+      os: osx
+      # xcode 11 image comes with python 3.7
+      osx_image: xcode11
+      # language: python will error
+      language: shell
+  {{/python-versions.py37}}
+
+
+  {{#python-versions.py36}}
+    # osx python 3.6
+    - name: "Python: 3.6"
+      os: osx
+      osx_image: xcode11
+      language: shell
+      # switch to python 3.6
+      addons:
+        homebrew:
+          update: true
+      before_install:
+        - brew unlink python
+        - brew install --ignore-dependencies https://raw.githubusercontent.com/Homebrew/homebrew-core/f2a764ef944b1080be64bd88dca9a1d80130c558/Formula/python.rb
+        - brew switch python 3.6.5_1
+      # end switch
+  {{/python-versions.py36}}
+
+  {{#python-versions.py35}}
+    # osx python 3.5
+    - name: "Python: 3.5"
+      os: osx
+      osx_image: xcode11
+      language: shell
+      # switch to python 3.5
+      addons:
+        homebrew:
+          update: true
+      before_install:
+        - pyenv install 3.5.2
+        - pyenv global 3.5.2
+      # end switch
+  {{/python-versions.py35}}
+
+
+{{/os.mac}}
+{{#os.windows}}
+  {{#python-versions.py37}}
+    # windows python 3.7
+    - name: "Python: 3.7"
+      os: windows
+      # language: python will error
+      language: shell
+      # install python 3.7
+      before_install:
+        - choco install python --version 3.7.4
+        - python -m pip install --upgrade pip
+      install: python -m pip install tox
+      # On Windows, python3 does not exist
+      script: python -m tox
+      env: PATH=/c/Python37:/c/Python37/Scripts:$PATH
+  {{/python-versions.py37}}
+  {{#python-versions.py36}}
+    # windows python 3.6
+    - name: "Python: 3.6"
+      os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.6.8
+        - python -m pip install --upgrade pip
+        - python -m pip install pipenv
+      install: python -m pip install tox
+      script: python -m tox
+      env: PATH=/c/Python36:/c/Python36/Scripts:$PATH
+  {{/python-versions.py36}}
+  {{#python-versions.py35}}
+    # windows python 3.5
+    - name: "Python: 3.5"
+      os: windows
+      language: shell
+      before_install:
+        - choco install python --version 3.5.4
+        - python -m pip install --upgrade pip
+        - python -m pip install pipenv
+      install: python -m pip install tox
+      script: python -m tox
+      env: PATH=/c/Python35:/c/Python35/Scripts:$PATH
+  {{/python-versions.py35}}
+{{/os.windows}}
+    - stage: "PYPI release"
+      install: ''
+      script: ''
+      after_success: ''
+      deploy:
+        provider: pypi
+        user: {{pypi-username}}
+        password:
+          secure: # encrypted password
+        on:
+          tags: true

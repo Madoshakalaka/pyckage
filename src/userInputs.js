@@ -321,8 +321,26 @@ inputs.getLicensePersonName = () =>{
     return $("#license-person-name").val();
 };
 
+/**
+ * @returns {Object}
+ */
+inputs.getPythonVersions = () => {
+    const dict = {}
+    $.each($(".python-version"), (_, v) => {dict[v.id] = $(v).is(':checked')})
+    return dict
+}
+
+/**
+ * @returns {Object}
+ */
+inputs.getOS = () => {
+    const dict = {}
+    $.each($(".os"), (_, v) => {dict[v.id] = $(v).is(':checked')});
+    return dict
+}
+
 inputs.getPypiUsername = () =>{
-    return $("#pypi-user-name").val();
+    return $("#pypi-username").val();
 };
 
 inputs.getCreateCmdEntry = ()=>{

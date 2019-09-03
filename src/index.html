@@ -1,234 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-<!--    <script src="js/jquery.min.js"></script>-->
+    <!--    <script src="js/jquery.min.js"></script>-->
 
     <script>
-      window.jQuery = window.$ = require('jquery');
+        window.jQuery = window.$ = require('jquery')
     </script>
 
     <link rel="stylesheet" href="css/bootstrap.min.css">
-<!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
+    <!--    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">-->
     <script>require('bootstrap')</script>
-<!--    <script src="js/bootstrap.min.js"></script>-->
+    <!--    <script src="js/bootstrap.min.js"></script>-->
 
     <title></title>
 
     <style>
-      .error{
-        color:red;
-      }
+        .error {
+            color: red;
+        }
 
-      .loading{
-        color: orange;
-      }
+        .loading {
+            color: orange;
+        }
 
-      .warning {
-        color: orangered;
-      }
-      .message {
-        color: green;
-      }
+        .warning {
+            color: orangered;
+        }
 
-      /* Optin Tooltip */
-      .pointer-cursor {
-        cursor: pointer;
-      }
+        .message {
+            color: green;
+        }
 
-      .with-tooltip input[type="checkbox"] {
-        vertical-align: middle;
-      }
-      .with-tooltip a {
-        text-decoration: none;
-      }
-      .with-tooltip [data-tip] {
-        position: relative;
-        cursor: help;
-      }
-      .with-tooltip [data-tip]:before {
-        content: "";
-        display: none;
-        border: 5px solid transparent;
-        border-top-color: #1a1a1a;
-        position: absolute;
-        top: -7px;
-        left: 3px;
-        z-index: 8;
-        font-size: 0;
-        line-height: 0;
-        width: 0;
-        height: 0;
-      }
-      .with-tooltip [data-tip]:after {
-        display: none;
-        content: attr(data-tip);
-        position: absolute;
-        top: -35px;
-        left: -0px;
-        padding: 5px 8px;
-        background: #1a1a1a;
-        color: #fff;
-        z-index: 9;
-        font-size: 0.8em;
-        height: 18px;
-        line-height: 18px;
-        -webkit-border-radius: 3px;
-        -moz-border-radius: 3px;
-        border-radius: 3px;
-        white-space: normal;
-        word-wrap: normal;
-        text-align: center;
-        text-decoration: none;
-      }
-      .with-tooltip [data-tip]:hover:before,
-      .with-tooltip [data-tip]:hover:after {
-        display: block;
-      }
-      .with-tooltip .tip-above[data-tip]:after {
-        top: -108px;
-        left: -101px;
-        height: 92px;
-        width: 210px;
-      }
-      .with-tooltip .tip-below[data-tip]:after {
-        top: 22px;
-        left: -101px;
-        height: 92px;
-        width: 210px;
-      }
-      .with-tooltip .tip-below[data-tip]:before {
-        border-top-color: transparent;
-        border-right-color: transparent;
-        border-bottom-color: #1a1a1a;
-        border-left-color: transparent;
-        top: 13px;
-        left: 5px;
-      }
+        /* Optin Tooltip */
+        .pointer-cursor {
+            cursor: pointer;
+        }
+
+        .with-tooltip input[type="checkbox"] {
+            vertical-align: middle;
+        }
+
+        .with-tooltip a {
+            text-decoration: none;
+        }
+
+        .with-tooltip [data-tip] {
+            position: relative;
+            cursor: help;
+        }
+
+        .with-tooltip [data-tip]:before {
+            content: "";
+            display: none;
+            border: 5px solid transparent;
+            border-top-color: #1a1a1a;
+            position: absolute;
+            top: -7px;
+            left: 3px;
+            z-index: 8;
+            font-size: 0;
+            line-height: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .with-tooltip [data-tip]:after {
+            display: none;
+            content: attr(data-tip);
+            position: absolute;
+            top: -35px;
+            left: -0px;
+            padding: 5px 8px;
+            background: #1a1a1a;
+            color: #fff;
+            z-index: 9;
+            font-size: 0.8em;
+            height: 18px;
+            line-height: 18px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;
+            white-space: normal;
+            word-wrap: normal;
+            text-align: center;
+            text-decoration: none;
+        }
+
+        .with-tooltip [data-tip]:hover:before,
+        .with-tooltip [data-tip]:hover:after {
+            display: block;
+        }
+
+        .with-tooltip .tip-above[data-tip]:after {
+            top: -108px;
+            left: -101px;
+            height: 92px;
+            width: 210px;
+        }
+
+        .with-tooltip .tip-below[data-tip]:after {
+            top: 22px;
+            left: -101px;
+            height: 92px;
+            width: 210px;
+        }
+
+        .with-tooltip .tip-below[data-tip]:before {
+            border-top-color: transparent;
+            border-right-color: transparent;
+            border-bottom-color: #1a1a1a;
+            border-left-color: transparent;
+            top: 13px;
+            left: 5px;
+        }
 
     </style>
 
-  </head>
-  <body>
-  <h1>Pykage</h1>
+</head>
+<body>
+<h1>Pykage</h1>
 
-  <p hidden class="warning" id="no-python-message">Cannot locate python exe to access Pypi</p>
-  <div hidden class="alert alert-success" role="alert" id="package-available-message">Package name available</div>
-  <p hidden class="warning" id="package-duplicate-error">Package with the same name exists</p>
-  <p hidden class="error" id="package-empty-error">Please give package a name</p>
-  <p hidden class="loading" id="package-check-loading">Checking name availability from pypi...</p>
-  <p hidden class="error" id="package-check-error">Error happened. Can't check availability</p>
-  <label for="package-name">Package Name:</label>
-  <input id="package-name" placeholder="All lowercase; no space">
+<p hidden class="warning" id="no-python-message">Cannot locate python exe to access Pypi</p>
+<div hidden class="alert alert-success" role="alert" id="package-available-message">Package name available</div>
+<p hidden class="warning" id="package-duplicate-error">Package with the same name exists</p>
+<p hidden class="error" id="package-empty-error">Please give package a name</p>
+<p hidden class="loading" id="package-check-loading">Checking name availability from pypi...</p>
+<p hidden class="error" id="package-check-error">Error happened. Can't check availability</p>
+<label for="package-name">Package Name:</label>
+<input id="package-name" placeholder="All lowercase; no space">
 
-  <br>
+<br>
 
-  <label for="package-description">Package description:</label>
-  <textarea id="package-description" placeholder="For readme, PYPI"></textarea>
+<label for="package-description">Package description:</label>
+<textarea id="package-description" placeholder="For readme, PYPI"></textarea>
 
-  <br>
-  <label for="git-repo-name">Github repository name:</label>
-  <input id="git-repo-name">
+<br>
+<label for="git-repo-name">Github repository name:</label>
+<input id="git-repo-name">
 
-  <br>
+<br>
 
-  <label for="license">License:</label>
-  <select id="license">
+<label for="license">License:</label>
+<select id="license">
     <option value="MIT">MIT</option>
-  </select>
+</select>
 
 
-  <br>
+<br>
 
-  <label for="license-person-name">Name on license:</label>
-  <input id="license-person-name" placeholder="You full name on the license" class="auto-save">
+<label for="license-person-name">Name on license:</label>
+<input id="license-person-name" placeholder="You full name on the license" class="auto-save">
 
-  <br>
+<br>
 
-  <label for="pypi-user-name">Pypi username:</label>
-  <input id="pypi-user-name" placeholder="your username at pypi.org" class="auto-save">
+<label for="pypi-username">Pypi username:</label>
+<input id="pypi-username" placeholder="your username at pypi.org" class="auto-save">
 
-  <br>
+<br>
 
-  <label for="github-username">Github username:</label>
-  <input id="github-username" placeholder="Your Github username" class="auto-save">
+<label for="github-username">Github username:</label>
+<input id="github-username" placeholder="Your Github username" class="auto-save">
 
-  <br>
+<br>
 
-  <label for="url-on-pypi">Url on PyPI:</label>
-  <input id="url-on-pypi" placeholder="Your home page url that displays on PyPI">
-  <br>
+<label for="url-on-pypi">Url on PyPI:</label>
+<input id="url-on-pypi" placeholder="Your home page url that displays on PyPI">
+<br>
 
-  <label for="author-on-pypi">Author on PyPI:</label>
-  <input id="author-on-pypi" placeholder="The author name that displays on PyPI" class="auto-save">
-  <br>
+<label for="author-on-pypi">Author on PyPI:</label>
+<input id="author-on-pypi" placeholder="The author name that displays on PyPI" class="auto-save">
+<br>
 
-  <label for="author-email">Your e-mail:</label>
-  <input id="author-email" placeholder="You email displayed on pypi" class="auto-save">
-  <br>
+<label for="author-email">Your e-mail:</label>
+<input id="author-email" placeholder="You email displayed on pypi" class="auto-save">
+<br>
 
-  <label for="dependency-choices">dependency</label>
+<label for="dependency-choices">dependency</label>
 
-  <div class="btn-group" data-toggle="buttons" id="dependency-choices">
+<div class="btn-group" data-toggle="buttons" id="dependency-choices">
     <label class="btn btn-primary active">
-      <input type="radio" name="options" id="pipfile" checked> pipfile
+        <input type="radio" name="options" id="pipfile" checked> pipfile
     </label>
     <label class="btn btn-primary">
-      <input type="radio" name="options" id="requirements" autocomplete="off"> requirements.txt
+        <input type="radio" name="options" id="requirements" autocomplete="off"> requirements.txt
     </label>
 
-  </div>
+</div>
 
+<br>
+<br>
 
-<!--  <div class="btn-group" role="group" aria-label="...">-->
-<!--    <button type="button" class="btn btn-default">requirements.txt</button>-->
-<!--    <button type="button" class="btn btn-default">pipfile</button>-->
-<!--  </div>-->
+<label for="starting-dev-dependencies">dev tools</label>
 
-  <h3 class="with-tooltip">python version<a href="#"
-                       data-tip="Tests in multiple python versions in travis.yml. Python version required in setup.py"
-                       class="tip-above">
+<!--todo: allow opt-out-->
+<div class="btn-group" data-toggle="buttons" id="starting-dev-dependencies">
+    <label class="btn btn-primary active disabled">
+        <input type="checkbox">pytest
+    </label>
+    <label class="btn btn-primary active disabled">
+        <input type="checkbox"> pytest-cov
+    </label>
+    <label class="btn btn-primary active disabled">
+        <input type="checkbox"> codecov
+    </label>
+    <label class="btn btn-primary active disabled">
+        <input type="checkbox"> black
+    </label>
+</div>
+<br>
+<br>
+<div class="well well-sm">You are not allowed to opt-out these dev tools. They are all good stuff</div>
+
+<h3 class="with-tooltip">python version<a href="#"
+                                          data-tip="Affects travis.yml. Version_requires keyword in setup.py"
+                                          class="tip-above">
     <span class="glyphicon glyphicon-question-sign"></span>
-  </a></h3>
+</a></h3>
 
-  <label for="python-version-35" class="pointer-cursor"><input type="checkbox" id="python-version-35" class="python-version auto-save">3.5</label><br>
-  <input type="checkbox" id="python-version-36" class="python-version auto-save"><label for="python-version-36" class="pointer-cursor">3.6</label><br>
-  <input type="checkbox" id="python-version-37" class="python-version auto-save"><label for="python-version-37" class="pointer-cursor">3.7</label><br>
+<label for="py35" class="pointer-cursor"><input type="checkbox" id="py35"
+                                                class="python-version auto-save">3.5</label>
+<input type="checkbox" id="py36" class="python-version auto-save"><label for="py36"
+                                                                         class="pointer-cursor">3.6</label>
+<input type="checkbox" id="py37" class="python-version auto-save"><label for="py37"
+                                                                         class="pointer-cursor">3.7</label><br>
 
 
-  <br>
+<h3 class="with-tooltip">OS support<a href="#"
+                                          data-tip="Affects .travis.yml. Classifiers in setup.py"
+                                          class="tip-above">
+    <span class="glyphicon glyphicon-question-sign"></span>
+</a></h3>
 
-  <div class="with-tooltip">
-    <label for="create-cmd-entry"><input type="checkbox" id="create-cmd-entry">Create Command Line Entry</label>
+<label for="windows" class="pointer-cursor"><input type="checkbox" id="windows"
+                                                             class="os auto-save" checked>Windows</label>
+<input type="checkbox" id="mac" class="os auto-save" checked><label for="mac"
+                                                                                      class="pointer-cursor">Mac</label>
+<input type="checkbox" id="linux" class="os auto-save" checked><label for="linux"
+                                                                                      class="pointer-cursor">Linux</label><br>
+
+<br>
+
+<div class="with-tooltip">
+    <label for="create-cmd-entry" class="pointer-cursor"><input type="checkbox" id="create-cmd-entry">Create Command
+        Line Entry</label>
 
     <a href="#"
        data-tip="if ticked, 'entry_point' line will be added in setup.py. __main__.py will be created. A function stem with argparse will be created"
        class="tip-above">
-      <span class="glyphicon glyphicon-question-sign"></span>
+        <span class="glyphicon glyphicon-question-sign"></span>
     </a>
 
 
-  </div>
+</div>
 
-  <br>
-  <label for="command-name">Command name:</label>
-  <input id="command-name" placeholder="Command name for terminal shortcut">
+<br>
+<label for="command-name">Command name:</label>
+<input id="command-name" placeholder="Command name for terminal shortcut">
 
-  <br>
+<br>
 
-  <p hidden class="error" id="directory-exists-error">Folder with the same package name already exists. Aborted.<p>
-  <p hidden class="error" id="directory-empty-error">Please choose a directory<p>
-  <label for="directory">Choose a directory to generate the project:</label>
-  <input type="file" id="directory" webkitdirectory/>
+<!--  <p hidden class="error" id="directory-exists-error">Folder with the same package name already exists. Aborted.<p>-->
+<p hidden class="error" id="directory-empty-error">Please choose a directory
+<p>
+    <label for="directory">Choose a directory to generate the project:</label>
+    <input type="file" id="directory" webkitdirectory/>
 
-  <br>
-  <br>
+    <br>
+    <br>
 
-  <p hidden class="loading" id="generating">Generating Project...<p>
-  <p hidden class="message" id="generation-complete-message">Generation Complete<p>
-  <button id="generate-button">Generate</button>
+<p hidden class="loading" id="generating">Generating Project...
+<p>
+<p hidden class="message" id="generation-complete-message">Generation Complete
+<p>
+    <button id="generate-button">Generate</button>
 
-  </body>
+</body>
 </html>
