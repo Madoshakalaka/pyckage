@@ -15,7 +15,7 @@ def cmd_entry(argv=sys.argv):
     #     help="blah",
     # )
 
-    argv = parser.parse_args(argv)
+    argv = parser.parse_args(argv[1:])
 
     # add your command line program here
 

@@ -66,7 +66,18 @@ function ensureDirSync (dirpath) {
     try {
         fs.mkdirSync(dirpath, { recursive: true })
     } catch (err) {
-        if (err.code !== 'EEXIST') throw err
+        if (err.code !== 'EEXIST')throw err
+    }
+}
+
+function unlinkSyncOrNot (file) {
+    try {
+        fs.unlinkSync(file)
+    } catch (err) {
+        if (err.code !== 'ENOENT'){
+            console.log(err.code)
+            throw err
+        }
     }
 }
 
@@ -90,6 +101,7 @@ button.on('click',() => {
             const description = inputs.getPackageDescription()
             const createCmdEntry = inputs.getCreateCmdEntry()
             const commandName = inputs.getCommandName()
+
             const pypiUsername = inputs.getPypiUsername()
             const licensePersonName = inputs.getLicensePersonName()
             const pythonVersions = inputs.getPythonVersions()
@@ -145,7 +157,7 @@ button.on('click',() => {
 
                 ensureDirSync(path.join(projectFolder, 'readme_assets'))
                 ensureDirSync(path.join(projectFolder, 'tests'))
-                ensureDirSync(path.join(projectFolder, 'tests', 'fixtures'))
+                ensureDirSync(path.join(projectFolder, 'tests', 'data'))
                 fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '')
 
 
@@ -155,12 +167,14 @@ button.on('click',() => {
                     writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py')
                 }
                 else{
-                    fs.unlinkSync(path.join(projectFolder, packageName, '__main__.py'))
+                    unlinkSyncOrNot(path.join(projectFolder, packageName, '__main__.py'))
                 }
 
                 if (dependencyChoice === 'pipfile') {
-                    writeTemplate('pipfile.mst', lookup, projectFolder, 'pipfile')
+                    unlinkSyncOrNot(path.join(projectFolder, 'requirements.txt'))
+                    writeTemplate('pipfile.mst', lookup, projectFolder, 'Pipfile')
                 } else if (dependencyChoice === 'requirements') {
+                    unlinkSyncOrNot(path.join(projectFolder, 'Pipfile'))
                     writeTemplate('requirements.txt.mst', lookup, projectFolder, 'requirements.txt')
                 }
 

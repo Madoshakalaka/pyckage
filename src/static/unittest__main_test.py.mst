@@ -17,11 +17,11 @@ class MyTestCase(unittest.TestCase):
         )
         out, err = p.communicate()
 
-        out = out.decode(encoding="utf-8").strip()
-        err = err.decode(encoding="utf-8").strip()
+        out = out.decode(encoding="utf-8")
+        err = err.decode(encoding="utf-8")
 
         # todo: tests for command line output
-        self.assertTrue(out)
+        self.assertEqual(out.strip(), "reserved command line entry for python package {{package-name}}")
         self.assertFalse(err)
 {{/create-cmd-entry}}
 
