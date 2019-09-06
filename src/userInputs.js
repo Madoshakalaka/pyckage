@@ -137,6 +137,7 @@ const author_email = $("#author-email");
 const python_version_boxes = $(".python-version");
 const dependencyChoiceBtns = $("#dependency-choices label")
 const testStyleBtns = $("#test-style label")
+const devToolBtns = $("#starting-dev-dependencies label")
 
 const create_cmd_entry_checkbox = $("#create-cmd-entry");
 const command_name_input = $("#command-name");
@@ -382,6 +383,11 @@ inputs.getTestStyle = () =>{
     return testStyleBtns.filter(".active").attr('id');
 };
 
+inputs.getDevToolNames = () =>{
+    const names = []
+    $.each(devToolBtns.filter(".active"), (_, v) => {names.push($(v).text().trim())})
+    return names
+}
 
 inputs.checkCompleteness= ()=>{
 

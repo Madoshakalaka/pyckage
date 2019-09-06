@@ -3,8 +3,11 @@ const path = require('path')
 const inputs = require("./userInputs")
 const fs = require('fs')
 const Mustache = require('mustache')
-const {app, dialog} = require('electron').remote
-// const dialog = require('electron').remote.dialog
+const {app, dialog, net} = require('electron').remote
+const pkgstat = require('electron').remote.require('pkgstat')
+const semver = require('semver')
+
+
 
 const appPath = app.getAppPath()
 
@@ -13,29 +16,12 @@ function rendererPath(p) {
 }
 
 // disable bs checkbox button groups with "disabled" class
-$('.btn-group .btn.disabled').click(function(event) {
-    event.stopPropagation();
-});
+$('.btn-group .btn.disabled').click(function (event) {
+    event.stopPropagation()
+})
 
-// const explanation = $("#explanation");
 
 const pypi_license_strings = {'MIT': "License :: OSI Approved :: MIT License"}
-
-// const {spawn} = require('child_process');
-//
-// const ls = spawn('travis', ['encrypt', '123']);
-//
-// ls.stdout.on('data', (data) => {
-//     console.log(`stdout: ${data}`);
-// });
-//
-// ls.stderr.on('data', (data) => {
-//     console.log(`stderr: ${data}`);
-// });
-//
-// ls.on('close', (code) => {
-//     console.log(`child process exited with code ${code}`);
-// });
 
 
 function replaceArgument(original, tag, substitute) {
@@ -62,19 +48,19 @@ function writeTemplate(templateFile, lookup, ...paths) {
     return content
 }
 
-function ensureDirSync (dirpath) {
+function ensureDirSync(dirpath) {
     try {
-        fs.mkdirSync(dirpath, { recursive: true })
+        fs.mkdirSync(dirpath, {recursive: true})
     } catch (err) {
-        if (err.code !== 'EEXIST')throw err
+        if (err.code !== 'EEXIST') throw err
     }
 }
 
-function unlinkSyncOrNot (file) {
+function unlinkSyncOrNot(file) {
     try {
         fs.unlinkSync(file)
     } catch (err) {
-        if (err.code !== 'ENOENT'){
+        if (err.code !== 'ENOENT') {
             console.log(err.code)
             throw err
         }
@@ -85,14 +71,31 @@ function unlinkSyncOrNot (file) {
  * @param {string} packageName
  * @returns {string}
  */
-function packageNameToFolderName(packageName){
+function packageNameToFolderName(packageName) {
     return packageName.replace('-', '_')
+}
+
+function format_dev_package(packageName) {
+    return pkgstat(packageName, "python").then(resp=>{
+
+        let version = resp['version']
+        const isValid = semver.valid(version)
+
+        if (isValid) {
+            const majorDotMinor = semver.major(version) + '.' + semver.minor(version)
+            return packageName + ' = "~=' + majorDotMinor + '"'
+        } else {
+            return packageName + ' = "==' + version + '"'
+        }
+        }
+    )
+
 }
 
 const button = $("#generate-button")
 const generating = $("#generating")
 
-button.on('click',() => {
+button.on('click', () => {
         button.attr("disabled", true)
         const isInputOK = inputs.checkCompleteness()
         if (isInputOK) {
@@ -106,7 +109,7 @@ button.on('click',() => {
             const licensePersonName = inputs.getLicensePersonName()
             const pythonVersions = inputs.getPythonVersions()
             const os = inputs.getOS()
-            os['windows-only'] = os['windows'] && (! os['mac']) && (! os['linux'])
+            os['windows-only'] = os['windows'] && (!os['mac']) && (!os['linux'])
             console.log(os)
             console.log(pythonVersions)
             const currentYear = (new Date()).getFullYear().toString()
@@ -136,69 +139,81 @@ button.on('click',() => {
                 'github-description': githubDescription,
                 'author-on-pypi': authorOnPypi,
                 'author-email': authorEmail,
+                'dev-packages': []
             }
 
             if (dependencyChoice === 'pipfile') lookup['virtual-env-instruction'] = 'pipenv install --dev'
             else if (dependencyChoice === 'requirements') lookup['virtual-env-instruction'] = 'pip install -r requirements'
 
             let testFileTemplate = ''
-            if (testStyle === 'pytest'){
+            if (testStyle === 'pytest') {
                 testFileTemplate = 'pytest__main_test.py.mst'
-            }else{ // unittest
+            } else { // unittest
                 testFileTemplate = 'unittest__main_test.py.mst'
             }
             // todo: remove requirements/pipfile if chosen otherwise
             // todo: pytest__main_test.py.mst
             generating.fadeIn('slow')
+
             function createFiles() {
-                ensureDirSync(projectFolder)
-                ensureDirSync(path.join(projectFolder, packageName))
-                fs.writeFileSync(path.join(projectFolder, packageName, "__init__.py"), "")
+                return Promise.all(inputs.getDevToolNames().map(toolName => format_dev_package(toolName).then(resp => {
+                        lookup['dev-packages'].push(resp)
+                        console.log(resp)
+                    })
+                    )
+                ).then(() => {
 
-                ensureDirSync(path.join(projectFolder, 'readme_assets'))
-                ensureDirSync(path.join(projectFolder, 'tests'))
-                ensureDirSync(path.join(projectFolder, 'tests', 'data'))
-                fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '')
+                    ensureDirSync(projectFolder)
+                    ensureDirSync(path.join(projectFolder, packageName))
+                    fs.writeFileSync(path.join(projectFolder, packageName, "__init__.py"), "")
+
+                    ensureDirSync(path.join(projectFolder, 'readme_assets'))
+                    ensureDirSync(path.join(projectFolder, 'tests'))
+                    ensureDirSync(path.join(projectFolder, 'tests', 'data'))
+                    fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '')
 
 
-                writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py')
-                // console.log(createCmdEntry)
-                if (createCmdEntry) {
-                    writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py')
-                }
-                else{
-                    unlinkSyncOrNot(path.join(projectFolder, packageName, '__main__.py'))
-                }
+                    writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py')
+                    // console.log(createCmdEntry)
+                    if (createCmdEntry) {
+                        writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py')
+                    } else {
+                        unlinkSyncOrNot(path.join(projectFolder, packageName, '__main__.py'))
+                    }
 
-                if (dependencyChoice === 'pipfile') {
-                    unlinkSyncOrNot(path.join(projectFolder, 'requirements.txt'))
-                    writeTemplate('pipfile.mst', lookup, projectFolder, 'Pipfile')
-                } else if (dependencyChoice === 'requirements') {
-                    unlinkSyncOrNot(path.join(projectFolder, 'Pipfile'))
-                    writeTemplate('requirements.txt.mst', lookup, projectFolder, 'requirements.txt')
-                }
+                    if (dependencyChoice === 'pipfile') {
+                        unlinkSyncOrNot(path.join(projectFolder, 'requirements.txt'))
+                        writeTemplate('pipfile.mst', lookup, projectFolder, 'Pipfile')
 
-                writeTemplate(testFileTemplate, lookup, projectFolder, 'tests', 'main_test.py')
+                    } else if (dependencyChoice === 'requirements') {
+                        unlinkSyncOrNot(path.join(projectFolder, 'Pipfile'))
+                        writeTemplate('requirements.txt.mst', lookup, projectFolder, 'requirements.txt')
+                    }
 
-                writeTemplate('gitignore.mst', lookup, projectFolder, '.gitignore')
-                writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml')
+                    writeTemplate(testFileTemplate, lookup, projectFolder, 'tests', 'main_test.py')
 
-                writeTemplate('LICENSE.mst', lookup, projectFolder, 'LICENSE')
+                    writeTemplate('gitignore.mst', lookup, projectFolder, '.gitignore')
+                    writeTemplate('travis.yml.mst', lookup, projectFolder, '.travis.yml')
 
-                writeTemplate('README.md.mst', lookup, projectFolder, 'README.md')
+                    writeTemplate('LICENSE.mst', lookup, projectFolder, 'LICENSE')
 
-                writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py')
+                    writeTemplate('README.md.mst', lookup, projectFolder, 'README.md')
 
-                writeTemplate('pykage-to-do.txt.mst', lookup, projectFolder, 'pykage-to-do.txt')
+                    writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py')
 
-                generating.hide()
+                    writeTemplate('pykage-to-do.txt.mst', lookup, projectFolder, 'pykage-to-do.txt')
 
-                // explanation.show();
-                $("#generation-complete-message").fadeIn('slow').fadeOut('slow')
+                })
+
             }
 
             if (!fs.existsSync(projectFolder)) {
-                createFiles()
+                createFiles().then(() => {
+                    $("#generation-complete-message").fadeIn('slow').fadeOut('slow')
+                }).finally(() => {
+                    generating.hide()
+                    button.attr("disabled", false)
+                })
             } else {
                 const msg = "folder " + projectFolder + ' already exists. Do you wish to overwrite it'
                 dialog.showMessageBox(null, {
@@ -208,17 +223,22 @@ button.on('click',() => {
                     title: 'Folder exists',
                     message: msg
                 }, (response) => {
-                    if (response === 1){
-                        createFiles()
+                    if (response === 1) {
+                        createFiles().then(() => {
+                            $("#generation-complete-message").fadeIn('slow').fadeOut('slow')
+                        }).finally(() => {
+                            generating.hide()
+                            button.attr("disabled", false)
+                        })
                     }
-                    generating.hide()
+
                 })
 
 
             }
         }
 
-        button.attr("disabled", false)
+
     }
 )
 

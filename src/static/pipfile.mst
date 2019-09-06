@@ -5,6 +5,9 @@ verify_ssl = true
 
 [dev-packages]
 {{package-name}} = {editable = true,path = "."}
+{{#dev-packages}}
+{{{.}}}
+{{/dev-packages}}
 
 [packages]
 
