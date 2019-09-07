@@ -11,3 +11,6 @@ verify_ssl = true
 
 [packages]
 
+[scripts]
+build = 'python setup.py sdist'
+release = 'python -m twine upload dist/*'

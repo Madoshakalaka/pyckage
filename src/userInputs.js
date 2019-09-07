@@ -129,7 +129,7 @@ function prepareAutoDecide(elements, element, func){
 const package_name_input = $("#package-name");
 const license_person_name_input = $("#license-person-name");
 const git_repo_name_input = $("#git-repo-name");
-const pypi_username = $("#pypi-user-name");
+const pypi_username = $("#pypi-username");
 const github_username = $("#github-username");
 const url_on_pypi = $("#url-on-pypi");
 const author_on_pypi = $("#author-on-pypi");

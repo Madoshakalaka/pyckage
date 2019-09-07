@@ -1,19 +1,26 @@
 # {{git-repo-name}}
-![travis-badge](https://travis-ci.org/{{github-username}}/{{git-repo-name}}.svg?branch=master)
 
-{{github-description}}
+[![Build Status](https://travis-ci.org/{{github-username}}/{{git-repo-name}}.svg)](https://travis-ci.org/{{github-username}}/{{git-repo-name}})
+[![codecov](https://codecov.io/gh/{{github-username}}/{{git-repo-name}}/branch/master/graph/badge.svg)](https://codecov.io/gh/{{github-username}}/{{git-repo-name}})
+[![PyPI version](https://badge.fury.io/py/{{package-name}}.svg)](https://badge.fury.io/py/{{package-name}})
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/{{package-name}}.svg)](https://pypi.python.org/pypi/{{package-name}}/)
 
-## Showcase
+
+## Installation
+
+`pip install {{package-name}}`
+
+## What Does It Do
 
 <!--You picture won't show on pypi if you use relative path.-->
 <!--If you want to add any image, please add the image to readme_assets folder and add the filename as below-->
 <!--![some show case picture](https://raw.githubusercontent.com/{{github-username}}/{{git-repo-name}}/master/readme_assets/showcasePicture.png)-->
+{{github-description}}
 
 
 ## How to Use
 
 
-`pip install {{package-name}}`
 
 <!--
 
@@ -25,7 +32,7 @@ add some help here
 
 -->
 
-
+{{#create-cmd-entry}}
 
 Pip creates command line executable entry point by default
 
@@ -45,3 +52,4 @@ add some command help here
 in case the command does not work (e.g. on windows when <python_dir>/Scripts is not in system path). Use the package entry:
 
 `> python -m {{package-name}}`
+{{/create-cmd-entry}}

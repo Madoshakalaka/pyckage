@@ -1,0 +1,15 @@
+[testenv]
+passenv =
+    CI
+    TRAVIS
+    TRAVIS_*
+    TOXENV
+    CODECOV_*
+
+deps =
+    pytest
+    pytest-cov
+    codecov
+commands =
+    pytest --doctest-modules --cov={{package-folder-name}}
+    codecov -e CODECOV_TOKEN

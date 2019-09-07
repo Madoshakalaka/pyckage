@@ -72,7 +72,7 @@ function unlinkSyncOrNot(file) {
  * @returns {string}
  */
 function packageNameToFolderName(packageName) {
-    return packageName.replace('-', '_')
+    return packageName.replace(/-/g, '_')
 }
 
 function format_dev_package(packageName) {
@@ -164,21 +164,23 @@ button.on('click', () => {
                 ).then(() => {
 
                     ensureDirSync(projectFolder)
-                    ensureDirSync(path.join(projectFolder, packageName))
-                    fs.writeFileSync(path.join(projectFolder, packageName, "__init__.py"), "")
+                    const packageFolderName = packageNameToFolderName(packageName)
+
+                    ensureDirSync(path.join(projectFolder, packageFolderName))
+                    fs.writeFileSync(path.join(projectFolder, packageFolderName, "__init__.py"), "")
 
                     ensureDirSync(path.join(projectFolder, 'readme_assets'))
                     ensureDirSync(path.join(projectFolder, 'tests'))
                     ensureDirSync(path.join(projectFolder, 'tests', 'data'))
                     fs.writeFileSync(path.join(projectFolder, 'tests', '__init__.py'), '')
 
-
-                    writeTemplate('main.py.mst', lookup, projectFolder, packageName, 'main.py')
+                    writeTemplate('tox.ini.mst', lookup, projectFolder, 'tox.ini')
+                    writeTemplate('main.py.mst', lookup, projectFolder, packageFolderName, 'main.py')
                     // console.log(createCmdEntry)
                     if (createCmdEntry) {
-                        writeTemplate('__main__.py.mst', lookup, projectFolder, packageName, '__main__.py')
+                        writeTemplate('__main__.py.mst', lookup, projectFolder, packageFolderName, '__main__.py')
                     } else {
-                        unlinkSyncOrNot(path.join(projectFolder, packageName, '__main__.py'))
+                        unlinkSyncOrNot(path.join(projectFolder, packageFolderName, '__main__.py'))
                     }
 
                     if (dependencyChoice === 'pipfile') {
@@ -200,8 +202,8 @@ button.on('click', () => {
                     writeTemplate('README.md.mst', lookup, projectFolder, 'README.md')
 
                     writeTemplate('setup.py.mst', lookup, projectFolder, 'setup.py')
-
-                    writeTemplate('pykage-to-do.txt.mst', lookup, projectFolder, 'pykage-to-do.txt')
+                    writeTemplate('pytest.ini.mst', lookup, projectFolder, 'pytest.ini')
+                    writeTemplate('pyckage-to-do.txt.mst', lookup, projectFolder, 'pyckage-to-do.txt')
 
                 })
 

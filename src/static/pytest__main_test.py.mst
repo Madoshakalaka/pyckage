@@ -1,3 +1,4 @@
+{{#create-cmd-entry}}
 from {{package-folder-name}}.main import cmd_entry
 
 
@@ -7,3 +8,4 @@ def test_cmd(capsys):
     captured = capsys.readouterr()
     assert captured.out.strip() == 'reserved command line entry for python package {{package-name}}'
     assert captured.err == ''
+{{/create-cmd-entry}}

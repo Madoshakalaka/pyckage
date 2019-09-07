@@ -115,8 +115,10 @@ jobs:
   {{/python-versions.py35}}
 {{/os.windows}}
     - stage: "PYPI release"
-      install: ''
-      script: ''
+      language: python
+      dist: xenial
+      install: pipenv install --dev pipenv-setup
+      script: pipenv-setup sync
       after_success: ''
       deploy:
         provider: pypi

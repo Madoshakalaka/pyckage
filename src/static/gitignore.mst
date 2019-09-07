@@ -2,4 +2,5 @@ build
 dist
 *.egg-info
 __pycache__/
-pykage-to-do.txt
+pyckage-to-do.txt
+.tox
