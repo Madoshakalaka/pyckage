@@ -1,12 +1,22 @@
 # Pykage
 
-
-
 Pykage creates a perfect python package project with high configurability.
+
+## Install
+https://github.com/Madoshakalaka/pykage/releases
+
+The generated project features:
+- filled `setup.py`
+- `.travis.yml` that enables automatic testing on different python versions
+- `.travis.yml` that enables automatic pypi release upon tagged github commit
+- detailed instructions, function stubs and comments
+The tool also remembers your profile and saves you time from keying in the same thing over and over again. 
 
 ![showcase.gif](readme_assets/showcase.gif)
 
+
 ## Highly Configurable
+
 
 ![configurability](readme_assets/configurability.png)
 
@@ -30,12 +40,3 @@ packagename/
 ```
 
 Check this [pyckage-example-project](https://github.com/Madoshakalaka/pyckage-example-project) repo to see what an example it generates.
-
-The generated project features:
-- filled `setup.py`
-- `.travis.yml` that enables automatic testing on different python versions
-- `.travis.yml` that enables automatic pypi release upon tagged github commit
-- detailed instructions, function stubs and comments
-
-## Install
-https://github.com/Madoshakalaka/pykage/releases
