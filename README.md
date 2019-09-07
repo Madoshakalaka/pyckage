@@ -10,6 +10,7 @@ The generated project features:
 - `.travis.yml` that enables automatic testing on different python versions
 - `.travis.yml` that enables automatic pypi release upon tagged github commit
 - detailed instructions, function stubs and comments
+
 The tool also remembers your profile and saves you time from keying in the same thing over and over again. 
 
 ![showcase.gif](readme_assets/showcase.gif)
