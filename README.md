@@ -3,8 +3,9 @@
 Pykage creates a perfect python package project with high configurability.
 
 ## Install
-Clone and `$ npm install && npm run start`
+Download release for Mac, Windows, and Ubuntu [here](https://github.com/Madoshakalaka/pykage/releases)
 
+## Features
 
 The generated project features:
 - filled `setup.py`
