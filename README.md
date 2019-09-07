@@ -44,4 +44,4 @@ packagename/
 
 ```
 
-Check this [pyckage-example-project](https://github.com/Madoshakalaka/pyckage-example-project) repo to see what an example it generates.
+Check this [pyckage-example-project](https://github.com/Madoshakalaka/pyckage-example-project) repo to see an example it generates.
