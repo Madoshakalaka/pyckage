@@ -6,6 +6,8 @@ Pykage creates a perfect python package project with high configurability.
 
 ![showcase.gif](readme_assets/showcase.gif)
 
+## Highly Configurable
+
 ![configurability](readme_assets/configurability.png)
 
 The basic project structure it creates:
