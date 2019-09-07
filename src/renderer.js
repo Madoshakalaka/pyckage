@@ -3,10 +3,12 @@ const path = require('path')
 const inputs = require("./userInputs")
 const fs = require('fs')
 const Mustache = require('mustache')
-const {app, dialog, net} = require('electron').remote
-const pkgstat = require('electron').remote.require('pkgstat')
+const {app, dialog} = require('electron').remote
+const pkgstat = require('electron').remote.getGlobal('pkgstat')
 const semver = require('semver')
 
+window.jQuery = window.$ = require('jquery');
+require('bootstrap');
 
 
 const appPath = app.getAppPath()

@@ -1,5 +1,5 @@
 const { app, BrowserWindow } = require('electron');
-
+global.pkgstat = require('pkgstat')
 
 
 
