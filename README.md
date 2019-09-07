@@ -9,7 +9,7 @@ Download release for Mac, Windows, and Ubuntu [here](https://github.com/Madoshak
 
 The generated project features:
 - filled `setup.py`
-- `.travis.yml` that enables automatic testing on different python versions
+- `.travis.yml` that enables automatic testing on chosen python versions and os
 - `.travis.yml` that enables automatic pypi release upon tagged github commit
 - You favorite dev tools (pytest, tox, black ...)
 - detailed instructions, function stubs and comments
@@ -33,6 +33,7 @@ packagename/
 ├── README.md
 ├── requirements.txt
 ├── setup.py
+├── .travis.yml
 ├── tests
 │   ├── data
 │   ├── __init__.py
