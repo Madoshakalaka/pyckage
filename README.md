@@ -11,6 +11,7 @@ The generated project features:
 - filled `setup.py`
 - `.travis.yml` that enables automatic testing on different python versions
 - `.travis.yml` that enables automatic pypi release upon tagged github commit
+- You favorite dev tools (pytest, tox, black ...)
 - detailed instructions, function stubs and comments
 
 The tool also remembers your profile and saves you time from keying in the same thing over and over again. 
