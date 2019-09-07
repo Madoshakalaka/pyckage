@@ -7,6 +7,9 @@ Download release for Mac, Windows, and Ubuntu [here](https://github.com/Madoshak
 
 ## Features
 
+![showcase.gif](readme_assets/showcase.gif)
+
+
 The generated project features:
 - filled `setup.py`
 - `.travis.yml` that enables automatic testing on chosen python versions and os
@@ -16,7 +19,6 @@ The generated project features:
 
 The tool also remembers your profile and saves you time from keying in the same thing over and over again. 
 
-![showcase.gif](readme_assets/showcase.gif)
 
 
 ## Highly Configurable
