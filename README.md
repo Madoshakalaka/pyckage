@@ -21,7 +21,7 @@ The tool also remembers your profile and saves you time from keying in the same 
 
 
 
-## Highly Configurable
+## Configurable
 
 
 ![configurability](readme_assets/configurability.png)
