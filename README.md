@@ -1,4 +1,4 @@
-# Pykage
+# Pyckage
 
 Pykage creates a perfect python package project with high configurability.
 
